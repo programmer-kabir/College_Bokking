@@ -17,7 +17,7 @@ const PopularCollege = () => {
       .then((res) => res.json())
       .then((data) => setCollegeData(data));
   }, []);
-  console.log(collegesData);
+
   return (
     <Content>
       <div className="text-center">
