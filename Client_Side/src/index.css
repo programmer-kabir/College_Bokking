@@ -13,3 +13,6 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
+.half-red-half-white {
+  background-image: linear-gradient(to right, 
+  #F50963 50%, rgb(133, 234, 133) 50%);}
