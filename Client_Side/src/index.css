@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Poppins", sans-serif;
+
+}
+
+.clip-style {
+  clip-path: polygon(20% 0, 100% 0, 80% 100%, 0% 100%);
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+
