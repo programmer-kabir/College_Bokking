@@ -5,7 +5,7 @@ const CollegeGallery = () => {
   return (
     <Content>
      <div className="text-center">
-        <p className="text-sm font-medium uppercase text-gray-500">Most popular Colleges</p>
+        <p className="text-sm font-medium uppercase text-gray-500">Gallery</p>
         <p className="text-[#F50963] text-xl font-bold">
         Graduates photo gallery of some colleges
         </p>

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "testimonial": "Tailwind CSS anteror bui",
+    "avatar": "https://i.ibb.co/bgKst37/download.jpg",
+    "rating": 4.5
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "testimonial": "Tailwind CSS anteror bui",
+    "avatar": "https://i.ibb.co/6sKd19G/images.jpg",
+    "rating": 4
+  },
+  {
+    "id": 1,
+    "name": "John Doe",
+    "testimonial": "Tailwind CSS anteror bui",
+    "avatar": "https://i.ibb.co/bgKst37/download.jpg",
+    "rating": 5
+  },
+  {
+    "id": 1,
+    "name": "John Doe",
+    "testimonial": "Tailwind CSS anteror bui",
+    "avatar": "https://i.ibb.co/bgKst37/download.jpg",
+    "rating": 3
+  },
+  {
+    "id": 1,
+    "name": "John Doe",
+    "testimonial": "Tailwind CSS anteror bui",
+    "avatar": "https://i.ibb.co/bgKst37/download.jpg",
+    "rating": 3
+  }
+]
