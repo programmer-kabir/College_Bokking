@@ -7,7 +7,7 @@ const SearchBar = () => {
       <h2 className="text-gray-900 font-bold mb-4 text-center">
         Search your college name ?{" "}
       </h2>
-      <div className="flex items-center gap-4 w-96  mx-auto rounded-full ">
+      <div className="flex items-center md:gap-4 gap-2 md:w-96  mx-auto rounded-full w-11/12 ">
         <input
           type="text"
           placeholder="Search..."
@@ -17,7 +17,7 @@ const SearchBar = () => {
         />
         <button
           // onClick={handleSearch}
-          className="flex  items-center justify-center w-20 h-10 text-white bg-[#F50963] rounded-md   "
+          className="flex  items-center justify-center md:w-20 w-12 h-10 md:h-10 text-white bg-[#F50963] rounded-md   "
         >
           
           <IoSearch size={22}/>

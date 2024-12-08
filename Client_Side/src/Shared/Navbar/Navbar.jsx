@@ -46,7 +46,7 @@ const Navbar = () => {
         className={`w-[100%] fixed   z-50 mx-auto ${
           location.pathname === "/"
             ? scrolled
-              ? "bg-gray-200 bg-opacity-20"
+              ? "bg-gray-200 bg-opacity-85 shadow-md"
               : ""
             : "shadow"
         } text-black`}
@@ -61,14 +61,14 @@ const Navbar = () => {
                   <img className=" w-[60px]" src={logo} alt="" />
                   <h2 className="text-xl font-medium">AdmitEase</h2>
                 </Link>
-                <div className="hidden md:flex gap-5 items-center text-gray-200">
+                <div className="hidden md:flex gap-5 font-medium items-center text-black ">
                 <NavLink
   to="/"
   className={({ isActive }) =>
-    `font-medium px-7 py-2 text-white ${
+    `font-medium px-7 py-2 text-white  ${
       isActive
-        ? "bg-[#F50963] text-white clip-style"
-        : "bg-gray-200 text-black"
+        ? "bg-[#F50963] hover:text-white clip-style"
+        : "bg-gray-200 text-black "
     }`
   }
 >
@@ -79,7 +79,7 @@ const Navbar = () => {
     `font-medium px-7 py-2 text-white ${
       isActive
         ? "bg-[#F50963] text-white clip-style"
-        : "bg-gray-200 text-black"
+        : "bg-gray-200 text-black "
     }`
   }>
                     Colleges{" "}

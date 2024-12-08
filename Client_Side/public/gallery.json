@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "imageURL": "https://i.ibb.co/0GZ5YWQ/images-1.jpg",
+    "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+  {
+    "id": 2,
+    "imageURL": "https://i.ibb.co/JQYCp5R/download-1.jpg",
+    "details": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  },
+  {
+    "id": 3,
+    "imageURL": "https://i.ibb.co/MpRtWGx/download.jpg",
+    "details": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  }
+]
