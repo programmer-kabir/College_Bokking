@@ -48,7 +48,7 @@ const Navbar = () => {
             ? scrolled
               ? "bg-gray-200 bg-opacity-85 shadow-md"
               : ""
-            : "shadow"
+            : "shadow bg-white"
         } text-black`}
       >
         <Content>
@@ -61,48 +61,60 @@ const Navbar = () => {
                   <img className=" w-[60px]" src={logo} alt="" />
                   <h2 className="text-xl font-medium">AdmitEase</h2>
                 </Link>
-                <div className="hidden md:flex gap-5 font-medium items-center text-black ">
-                <NavLink
-  to="/"
-  className={({ isActive }) =>
-    `font-medium px-7 py-2 text-white  ${
-      isActive
-        ? "bg-[#F50963] hover:text-white clip-style"
-        : "bg-gray-200 text-black "
-    }`
-  }
->
-  Home
-</NavLink>
+                
+<div className="hidden md:flex font-medium items-center text-black ">
+  <NavLink
+    to="/"
+    className={({ isActive }) =>
+      `font-medium px-7 py-2 ${
+        isActive
+          ? "bg-[#F50963] hover:text-white clip-style"
+          : "text-black"
+      }`
+    }
+  >
+    Home
+  </NavLink>
 
-                  <Link to="/colleges" className={({ isActive }) =>
-    `font-medium px-7 py-2 text-white ${
-      isActive
-        ? "bg-[#F50963] text-white clip-style"
-        : "bg-gray-200 text-black "
-    }`
-  }>
-                    Colleges{" "}
-                  </Link>
-                  <Link to="/admission" className={({ isActive }) =>
-    `font-medium px-7 py-2 text-white ${
-      isActive
-        ? "bg-[#F50963] text-white clip-style"
-        : "bg-gray-200 text-black"
-    }`
-  }>
-                    Admission
-                  </Link>
-                  <Link to="/myCollege" className={({ isActive }) =>
-    `font-medium px-7 py-2 text-white ${
-      isActive
-        ? "bg-[#F50963] text-white clip-style"
-        : "bg-gray-200 text-black"
-    }`
-  }>
-                    My College
-                  </Link>
-                </div>
+  <NavLink
+    to="/colleges"
+    className={({ isActive }) =>
+      `font-medium px-7 py-2 ${
+        isActive
+          ? "bg-[#F50963] hover:text-white clip-style"
+          : "text-black"
+      }`
+    }
+  >
+    Colleges
+  </NavLink>
+
+  <NavLink
+    to="/admission"
+    className={({ isActive }) =>
+      `font-medium px-7 py-2 ${
+        isActive
+          ? "bg-[#F50963] hover:text-white clip-style"
+          : "text-black"
+      }`
+    }
+  >
+    Admission
+  </NavLink>
+
+  <NavLink
+    to="/myCollege"
+    className={({ isActive }) =>
+      `font-medium px-7 py-2 ${
+        isActive
+          ? "bg-[#F50963] hover:text-white clip-style"
+          : "text-black"
+      }`
+    }
+  >
+    My College
+  </NavLink>
+</div>
 
                 <div className="flex  items-center space-x-5">
                   {/* User */}
@@ -156,13 +168,10 @@ const Navbar = () => {
                 >
                   <div className="text-left pb-16">
                     <div className="flex items-center justify-between py-2 border-b-2 px-5">
-                      <Link
-                        to="/"
-                        className="flex items-center justify-center"
-                      >
+                      <Link to="/" className="flex items-center justify-center">
                         <img className="w-[60px]" src={logo} alt="" />
                         <h2 className="text-2xl text-black font-semibold ">
-                        AdmitEase
+                          AdmitEase
                         </h2>
                       </Link>
                       <button onClick={handleNav}>
@@ -173,18 +182,27 @@ const Navbar = () => {
                       </button>
                     </div>
                     <div className="flex flex-col justify-center items-start pt-10 font-medium space-y-3 px-5">
-                    <Link to="/" className="font-medium border-b w-full pb-2">
-                    Home
-                  </Link>
-                  <Link to="/colleges" className="font-medium border-b w-full pb-2">
-                    Colleges{" "}
-                  </Link>
-                  <Link to="/admission" className="font-medium border-b w-full pb-2">
-                    Admission
-                  </Link>
-                  <Link to="/myCollege" className="font-medium border-b w-full pb-2">
-                    My College
-                  </Link>
+                      <Link to="/" className="font-medium border-b w-full pb-2">
+                        Home
+                      </Link>
+                      <Link
+                        to="/colleges"
+                        className="font-medium border-b w-full pb-2"
+                      >
+                        Colleges{" "}
+                      </Link>
+                      <Link
+                        to="/admission"
+                        className="font-medium border-b w-full pb-2"
+                      >
+                        Admission
+                      </Link>
+                      <Link
+                        to="/myCollege"
+                        className="font-medium border-b w-full pb-2"
+                      >
+                        My College
+                      </Link>
                     </div>
                     <button className="bg-[#F50963] mt-8 flex gap-2 items-center px-5 py-3">
                       <p className=" font-medium">Getting Started </p>
