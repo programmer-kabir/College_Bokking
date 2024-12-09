@@ -12,19 +12,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
 
-      console.log(currentUser);
-      //  Get and Set token
-      // if (currentUser) {
-      //   axios
-      //     .post(`${import.meta.env.VITE_LOCALHOST_KEY}/jwt`, {
-      //       email: currentUser?.email,
-      //     })
-      //     .then((data) => {
-      //       localStorage.setItem("access-token", data.data.token);
-      //     });
-      // } else {
-      //   localStorage.removeItem("access-token");
-      // }
+    console.log(currentUser);
       setLoading(false);
     });
     return () => {

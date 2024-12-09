@@ -5,16 +5,14 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
-import { toast } from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { saveUser } from "../../Components/Utils/SaveUser";
+import toast from "react-hot-toast";
 import useAuth from "../../Components/Hooks/useAuth";
-// import { AuthContext } from "../../providers/AuthProvider";
 
 const Signup = () => {
-  const { createUser, updateUserProfile, signInWithGoogle } =
-    useAuth()
-    console.log(createUser);
+  const { createUser, updateUserProfile, signInWithGoogle } = useAuth();
+  // console.log(creat.eUser);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -60,7 +58,6 @@ const Signup = () => {
     if (image) {
       const formData = new FormData();
       formData.append("image", image);
-      // setImageLoading(true);
       fetch(url, {
         method: "POST",
         body: formData,
@@ -68,18 +65,18 @@ const Signup = () => {
         .then((res) => res.json())
         .then((image) => {
           const photo = image?.data?.display_url;
-          console.log(createUser);
-          createUser(data.email, data.password)
-          .then((result) => {
+          createUser(data.email, data.password).then((result) => {
             const loggedUser = result.user;
-            console.log(loggedUser);
 
             updateUserProfile(data.name, photo)
-              .then((result)=>{
-                console.log(result);
+              .then((result) => {
+                saveUser(loggedUser);
+              toast.success("User Create Successfully")
+                navigate("/")
               })
-              .catch((error) => console.log(error));
-          });
+              .catch((error) => toast.error(error.message));
+          })
+          .catch((error) => toast.error(error.message));
         });
     }
     // createUser(data.email, data.password).then((result) => {

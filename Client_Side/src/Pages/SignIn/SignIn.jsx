@@ -6,11 +6,12 @@ import Swal from 'sweetalert2';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
+import useAuth from '../../Components/Hooks/useAuth';
 // import { AuthContext } from '../../providers/AuthProvider';
 // import { saveUser } from '../../components/SaveUser/SaveUser';
 
 const SignIn = () => {
-  const { signIn, signInWithGoogle } = false;
+  const { singIn, signInWithGoogle } = useAuth();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ const SignIn = () => {
 
   const onSubmit = (data) => {
     setLoading(true);
-    signIn(data.email, data.password)
+    singIn(data.email, data.password)
       .then((result) => {
         // console.log(result.user);
         navigate(from, { replace: true });
@@ -97,26 +98,29 @@ const SignIn = () => {
         <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
           Password
         </label>
+        <div  className={`w-full px-3 py-2 rounded border flex justify-between ${
+            errors.password ? 'border-red-500' : 'border-gray-300'
+          } focus:outline-none focus:ring-blue-500`}>
+          
         <input
           type={showPassword ? 'text' : 'password'}
           id="password"
           {...register('password', { required: 'Password is required' })}
-          className={`w-full px-3 py-2 rounded border ${
-            errors.password ? 'border-red-500' : 'border-gray-300'
-          } focus:outline-none focus:ring-blue-500`}
+         className='outline-none'
         />
         <button
           type="button"
-          className="absolute right-3 top-2.5 text-gray-500 focus:outline-none"
+          className=" right-3 top-2.5 text-gray-500 focus:outline-none"
           onClick={togglePasswordVisibility}
         >
           {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
         </button>
+        </div>
         {errors.password && <span role="alert" className="text-red-500 text-xs">{errors.password.message}</span>}
       </div>
 
       <button type="submit" className="bg-rose-500 w-full rounded-md py-3 text-white">
-        {loading ? <FaSpinner className="m-auto animate-spin" size={24} /> : 'Login'}
+      {loading ? <FaSpinner className="m-auto animate-spin" size={24} /> : 'Login'}
       </button>
 
       <div className="flex items-center pt-4 space-x-1">
