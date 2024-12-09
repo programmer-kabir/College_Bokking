@@ -1,68 +1,100 @@
-import React, { useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { FaSpinner } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { toast } from "react-hot-toast";
+import { AuthContext } from "../../Provider/AuthProvider";
+import { saveUser } from "../../Components/Utils/SaveUser";
+import useAuth from "../../Components/Hooks/useAuth";
 // import { AuthContext } from "../../providers/AuthProvider";
-
 
 const Signup = () => {
   const { createUser, updateUserProfile, signInWithGoogle } =
-false
-const [loading, setLoading] = useState(false);
-const navigate = useNavigate();
-const location = useLocation();
-const from = location.state?.from?.pathname || "/";
+    useAuth()
+    console.log(createUser);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-const {
-  register,
-  handleSubmit,
-  formState: { errors },
-  watch,
-} = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
 
-const handleGoogleSignIn = () => {
-  setLoading(true);
-  signInWithGoogle()
-    .then((result) => {
-      // console.log(result.user);
-      saveUser(result?.user);
-      // saveUser(result.user)
-      Swal.fire({
-        position: "top-middle",
-        icon: "success",
-        title: "User Logged in Successfully",
+  const handleGoogleSignIn = () => {
+    setLoading(true);
+    signInWithGoogle()
+      .then((result) => {
+        // console.log(result.user);
+        saveUser(result?.user);
+        // saveUser(result.user)
+        Swal.fire({
+          position: "top-middle",
+          icon: "success",
+          title: "User Logged in Successfully",
 
-        showConfirmButton: false,
-        timer: 1500,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        // setLoading(false)
+        // console.log(err.message);
+        toast.error(err.message);
       });
-      navigate(from, { replace: true });
-    })
-    .catch((err) => {
-      // setLoading(false)
-      // console.log(err.message);
-      toast.error(err.message);
-    });
-};
+  };
+  const url =
+    "https://api.imgbb.com/1/upload?key=f1e08dc7c44c396aa409d50dfcc797da";
+  const onSubmit = (data) => {
+    const image = data.image[0];
+    console.log(image);
+    if (image) {
+      const formData = new FormData();
+      formData.append("image", image);
+      // setImageLoading(true);
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((image) => {
+          const photo = image?.data?.display_url;
+          console.log(createUser);
+          createUser(data.email, data.password)
+          .then((result) => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
 
-const onSubmit = (data) => {
-  setLoading(true);
-  createUser(data.email, data.password).then((result) => {
-    const loggedUser = result.user;
-    // console.log(loggedUser);
-    // console.log(data);
+            updateUserProfile(data.name, photo)
+              .then((result)=>{
+                console.log(result);
+              })
+              .catch((error) => console.log(error));
+          });
+        });
+    }
+    // createUser(data.email, data.password).then((result) => {
+    //   const loggedUser = result.user;
+    //   // console.log(loggedUser);
+    //   // console.log(data);
 
-    updateUserProfile(data.name, data.photoURL)
-      .then() 
-      .catch((error) => console.log(error));
-  });
-};
+    //   updateUserProfile(data.name, data.photoURL)
+    //     .then()
+    //     .catch((error) => console.log(error));
+    // });
+  };
 
-const password = watch("password");
-const confirmPassword = watch("confirmPassword");
+  const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
 
   return (
     <div className=" pt-20 bg-slate-100 shadow-md  grid grid-cols-2 py-10 gap-x-10">
@@ -71,7 +103,6 @@ const confirmPassword = watch("confirmPassword");
           className="h-96 w-96"
           src="https://embed.lottiefiles.com/animation/107385"
         ></iframe>
-      
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -136,54 +167,40 @@ const confirmPassword = watch("confirmPassword");
           >
             Password
           </label>
-          <input
-            type="password"
-            id="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters long",
-              },
-              pattern: {
-                value: /^(?=.*[A-Z])(?=.*\W).+$/,
-                message:
-                  "Password must contain at least one capital letter and one special character",
-              },
-            })}
-            className={`w-full px-3 py-2 rounded border ${
+          <div
+            className={`w-full px-3 py-2 rounded border flex items-center justify-between ${
               errors.password ? "border-red-500" : "border-gray-300"
             } focus:outline-none focus:ring-blue-500`}
-          />
+          >
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              className="outline-none"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters long",
+                },
+
+                pattern: {
+                  value: /^(?=.*[A-Z])(?=.*\W).+$/,
+                  message:
+                    "Password must contain at least one capital letter and one special character",
+                },
+              })}
+            />
+            <span
+              className="top-3 end-3 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {/* Add your eye icon here */}
+              {showPassword ? <FaEye size={18} /> : <FaEyeSlash size={18} />}
+            </span>
+          </div>
           {errors.password && (
             <span role="alert" className="text-red-500 text-xs">
               {errors.password.message}
-            </span>
-          )}
-        </div>
-
-        <div className="mb-2">
-          <label
-            htmlFor="confirmPassword"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            {...register("confirmPassword", {
-              required: "Confirm Password is required",
-              validate: (value) =>
-                value === password || "Passwords do not match",
-            })}
-            className={`w-full px-3 py-2 rounded border ${
-              errors.confirmPassword ? "border-red-500" : "border-gray-300"
-            } focus:outline-none focus:ring-blue-500`}
-          />
-          {errors.confirmPassword && (
-            <span role="alert" className="text-red-500 text-xs">
-              {errors.confirmPassword.message}
             </span>
           )}
         </div>
@@ -198,12 +215,19 @@ const confirmPassword = watch("confirmPassword");
           <input
             type="file"
             id="image"
-            {...register("photoURL")}
+            {...register("image", {
+              required: "Image is required",
+            })}
             className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-blue-500"
           />
+          {errors.image && (
+            <span role="alert" className="text-red-500 text-xs">
+              {errors.image.message}
+            </span>
+          )}
         </div>
 
-        {/* <button
+        <button
           type="submit"
           className="bg-rose-500 w-full rounded-md py-3 text-white"
         >
@@ -212,7 +236,7 @@ const confirmPassword = watch("confirmPassword");
           ) : (
             "Register"
           )}
-        </button> */}
+        </button>
 
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
@@ -232,7 +256,7 @@ const confirmPassword = watch("confirmPassword");
         <p className="px-6 text-sm text-center text-gray-400">
           Already have an account?{" "}
           <Link
-            to="/login"
+            to="/signIn"
             className="hover:underline hover:text-rose-500 text-gray-600"
           >
             Login
@@ -241,7 +265,7 @@ const confirmPassword = watch("confirmPassword");
         </p>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

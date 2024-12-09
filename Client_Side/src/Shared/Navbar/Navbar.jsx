@@ -6,8 +6,9 @@ import { RxCross2 } from "react-icons/rx";
 import { MdArrowForwardIos, MdDashboard } from "react-icons/md";
 import logo from "../../assets/Logo/logo.png";
 import Content from "../../Components/Content/Content";
+import useAuth from "../../Components/Hooks/useAuth";
 const Navbar = () => {
-  const { user, logOut, loading } = false;
+  const { user, logOut, loading } = useAuth();
   const [nav, setNav] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -54,7 +55,8 @@ const Navbar = () => {
         <Content>
           <div className="mx-auto ">
             {loading ? (
-              <LoadingSpinner />
+              <p>ssss </p>
+          
             ) : (
               <div className="z-50   py-3  md:py-1 flex justify-between items-center text-black">
                 <Link to="/" className="flex items-center  ">
@@ -133,7 +135,7 @@ const Navbar = () => {
                       </>
                     ) : (
                       <>
-                        <Link to={"/login"}>
+                        <Link to={"/signIn"}>
                           <button className="bg-[#F50963] rounded-md flex gap-2 items-center px-5 py-2">
                             {/* <LuUser2 size={18} /> */}
                             <p className="font-semibold uppercase text-[15px]">
