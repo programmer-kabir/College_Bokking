@@ -34,6 +34,12 @@ async function run() {
     const usersDataCollection = client
       .db("College_Bokking")
       .collection("users");
+    const candidateDataCollection = client
+      .db("College_Bokking")
+      .collection("candidates");
+    const reviewCollection = client
+      .db("College_Bokking")
+      .collection("reviews");
 
     //   College Data Collection
     app.get("/collegeData", async (req, res) => {
@@ -53,6 +59,7 @@ async function run() {
     app.post("/users", async (req, res) => {
       const data = req.body;
       const query = { email: data.email };
+
       const existingUser = await usersDataCollection.findOne(query);
       if (existingUser) {
         return res.send({ message: "user already exist" });
@@ -60,7 +67,63 @@ async function run() {
       const result = await usersDataCollection.insertOne(data);
       res.send(result);
     });
+    app.get('/users', async(req, res) =>{
+      const result = await usersDataCollection.find().toArray()
+      res.send(result)
+    })
+    // Candidates Collection
 
+    app.post("/Candidate", async (req, res) => {
+      try {
+        const data = req.body;
+    console.log(data);
+        // Check for existing email
+        const emailQuery = { email: data.email };
+        const existingEmail = await candidateDataCollection.findOne(emailQuery);
+    
+        if (existingEmail) {
+          // If email exists, check for collegeId
+          const collegeQuery = { email: data.email, collegeId: data.collegeId };
+          const existingCollege = await candidateDataCollection.findOne(collegeQuery);
+    
+          if (existingCollege) {
+            return res.status(400).send({ message: "Email and College ID already exist." });
+          }
+        }
+    
+        // Insert new candidate data
+        const result = await candidateDataCollection.insertOne(data);
+        res.status(201).send(result);
+      } catch (error) {
+        res.status(500).send({ message: "An error occurred", error: error.message });
+      }
+    });
+    
+
+    // Candidates Collection
+    app.get("/Candidate", async (req, res) => {
+      const email = req.query.email;
+      console.log(email);
+      if (!email) {
+        res.send([]);
+      }
+      const query = { email: email };
+      const result = await candidateDataCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    app.post('/review', async(req, res) =>{
+      const body = req.body
+      console.log(body);
+      const result  = await reviewCollection.insertOne(body)
+      res.send(result)
+    })
+
+    app.get('/review', async(req, res) =>{
+      const body = req.body;
+      const result = await reviewCollection.find().toArray()
+      res.send(result)
+    })
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"

@@ -1,8 +1,19 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  updateProfile,
+  signOut,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import axios from "axios";
 import app from "../Firebase/Firebase.config";
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider(); // Move googleProvider inside the component function
+
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -12,7 +23,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
 
-    console.log(currentUser);
+      console.log(currentUser);
       setLoading(false);
     });
     return () => {
@@ -24,13 +35,13 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
-    // exiting user sing in
-    const singIn = (email, password) => {
-      setLoading(true);
-      return signInWithEmailAndPassword(auth, email, password);
-    };
+  // exiting user sing in
+  const singIn = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-      // User LogOUt
+  // User LogOUt
   const logOut = () => {
     return signOut(auth);
   };
@@ -40,14 +51,19 @@ const AuthProvider = ({ children }) => {
     const profileData = {
       displayName: name,
     };
-  
+
     if (photo !== null) {
       profileData.photoURL = photo;
     }
-  
+
     return updateProfile(auth.currentUser, profileData);
   };
-  
+  // Google
+  const signInWithGoogle = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+
   // Value pass
   const authInfo = {
     user,
@@ -56,7 +72,8 @@ const AuthProvider = ({ children }) => {
     createUser,
     singIn,
     logOut,
-    updateUserProfile
+    updateUserProfile,
+    signInWithGoogle,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

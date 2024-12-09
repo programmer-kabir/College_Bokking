@@ -34,7 +34,7 @@ const CollegeDetails = () => {
           alignItems: "center", // Vertically center the content
         }}
       >
-        <div className="md:flex flex-col justify-center w-full items-center bg-slate-500 bg-opacity-60 pb-44 pt-[160px] px-36">
+        <div className="md:flex flex-col justify-center w-full items-center bg-slate-500 bg-opacity-60 pb-44 pt-[160px] md:px-36 px-5">
           <p className="font-bold flex  justify-center gap-3">
             {" "}
             <span>

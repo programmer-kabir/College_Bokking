@@ -32,8 +32,8 @@ const Signup = () => {
     signInWithGoogle()
       .then((result) => {
         // console.log(result.user);
-        saveUser(result?.user);
-        // saveUser(result.user)
+        // saveUser(result?.user);
+        saveUser(result.user)
         Swal.fire({
           position: "top-middle",
           icon: "success",

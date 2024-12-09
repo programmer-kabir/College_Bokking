@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Title from "../../Components/Title/Title";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Content from "../../Components/Content/Content";
+import useAuth from "../../Components/Hooks/useAuth";
 
 const Admission = () => {
+  const {user} = useAuth()
+
   const [collegesData, setCollegeData] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3000/collegeData")
       .then((res) => res.json())
       .then((data) => setCollegeData(data));
   }, []);
+
+
   return (
     <div className="pt-20">
       <Title
@@ -17,7 +22,7 @@ const Admission = () => {
         subtitle={"Pick a College to get started your study"}
       />
       <Content>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-2 pt-10">
           {/* Map through the list of colleges and attach the click event */}
           {collegesData.map((college) => (
             <div key={college._id} className="border">
@@ -42,13 +47,14 @@ const Admission = () => {
                     </button>
                   </div>
                 </div>
-              </Link>{" "}
+              </Link>
+              
             </div>
           ))}
         </div>
       </Content>
     </div>
   );
-};
 
+}
 export default Admission;
